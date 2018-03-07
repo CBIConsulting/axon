@@ -1,0 +1,66 @@
+{
+	"listen" : "10.1.1.30",
+	"port" : 9876,
+	"timeout": 3,
+	"username" : "gaspy",
+	"group" : "gaspy",
+	"database" : "./axond2.sqlite",
+	"module_path" : "./plugins/",
+	"services" : [
+		{
+			"load" : "sshkeys.so",
+			"allowremote" : true,
+			"allowguests" : true,
+			"users" : "@admin",
+			"apipermission" : {
+				"default" : "@all",
+				"get" : "@all,@guests",
+				"post" : "@admin",
+				"put" : "@admin",
+				"delete" : "@admin",
+				"patch" : "@admin"
+			}
+		},
+		{
+			"load" : "messages.so",
+			"allowremote" : true,
+			"allowguests" : false,
+			"users" : "@admin,@all"
+		},
+		{
+			"load" : "machines.so",
+			"allowremote" : true,
+			"allowguests" : false,
+			"users" : "@admin,@all"
+		},
+		{
+			"load" : "files.so",
+			"allowremote" : true,
+			"allowguests" : false,
+			"users" : "@admin,@all"
+		},
+		{
+			"load" : "exec.so",
+			"allowremote" : true,
+			"allowguests" : false,
+			"users" : "@admin",
+			"config": {
+				"users" : {
+					"@admin" : [
+						{
+							"name" : "sui",
+							"command" : "./testsuid",
+							"arguments" : [
+								"arg1",
+								"arg2",
+								"%user1%",
+								"arg3"
+							],
+							"allowInput" : true
+						}
+						]
+				}
+			}
+		}
+	]
+}
